@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:alpine
+    ports:
+      - '5438:5432'
+    container_name: 'eqes_db'
+    restart: always
+    volumes:
+      - eqes:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+volumes:
+  eqes:
