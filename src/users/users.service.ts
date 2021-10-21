@@ -15,12 +15,6 @@ export class UsersService {
   async findOne(id: Prisma.UsersWhereUniqueInput) {
     const user = await this.repo.users.findUnique({
       where: id,
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        password: false,
-      },
     });
 
     if (!user) {
