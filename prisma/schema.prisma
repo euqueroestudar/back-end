@@ -10,10 +10,136 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 model Users {
-  id    Int     @id @default(autoincrement())
-  name  String?
-  email String  @unique
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
   password String
+  role     Role   @default(PERSON)
+
+  person      Person?
+  institution Institution?
+  andress     Andress?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Courses    Courses[]
+  Evaluation Evaluation[]
+  Branch     Branch[]
+}
+
+model Person {
+  id         Int          @id @default(autoincrement())
+  name       String
+  lastname   String
+  birthdate  DateTime
+  scholarity String
+  phone      String
+  userId     Int          @unique
+  user       Users        @relation(fields: [userId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Evaluation Evaluation[]
+}
+
+model Institution {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String
+  cnpj        String
+  scholarity  String
+  description String
+  userId      Int?     @unique
+  user        Users?   @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Courses    Courses[]
+  andress    Andress?     @relation(fields: [andressId], references: [id])
+  andressId  Int?
+  Evaluation Evaluation[]
+  published  Boolean      @default(true)
+  Branch     Branch[]
+}
+
+model Branch {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String
+  cnpj        String
+  scholarity  String
+  description String
+  userId      Int?     @unique
+  user        Users?   @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Courses       Courses[]
+  andress       Andress?     @relation(fields: [andressId], references: [id])
+  andressId     Int?
+  Evaluation    Evaluation[]
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  institutionId Int?
+  published     Boolean      @default(true)
+}
+
+model Andress {
+  id          Int           @id @default(autoincrement())
+  andress     String
+  number      String
+  complement  String
+  cep         String
+  district    String
+  city        String
+  state       String
+  country     String
+  userId      Int?          @unique
+  user        Users?        @relation(fields: [userId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Institution Institution[]
+  Branch      Branch[]
+}
+
+model Courses {
+  id            Int          @id @default(autoincrement())
+  name          String
+  startDate     DateTime
+  endDate       String
+  duration      String
+  scholarity    String
+  noticeLink    String
+  type          String
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  published     Boolean      @default(false)
+  author        Users        @relation(fields: [authorId], references: [id])
+  authorId      Int
+  institutionId Int?
+  Evaluation    Evaluation[]
+  Branch        Branch?      @relation(fields: [branchId], references: [id])
+  branchId      Int?
+}
+
+model Evaluation {
+  id            Int          @id @default(autoincrement())
+  stars         Int
+  description   String
+  Users         Users?       @relation(fields: [usersId], references: [id])
+  usersId       Int?
+  Person        Person?      @relation(fields: [personId], references: [id])
+  personId      Int?
+  Institution   Institution? @relation(fields: [institutionId], references: [id])
+  institutionId Int?
+  Courses       Courses?     @relation(fields: [coursesId], references: [id])
+  coursesId     Int?
+  Branch        Branch?      @relation(fields: [branchId], references: [id])
+  branchId      Int?
+}
+
+enum Role {
+  ADMIN
+  INSTITUTION
+  PERSON
 }
