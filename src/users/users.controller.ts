@@ -10,16 +10,20 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Users as UsersModel } from '.prisma/client';
+import { Prisma, Users as UsersModel } from '.prisma/client';
 import { UserDto, CreateUserDto, UpdateUserDto, FindOneUserDto } from './dtos';
 import { ApiTags } from '@nestjs/swagger';
 import { Serialize } from '../interceptors/serialize.interceptor';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @ApiTags('Users')
 @Serialize(UserDto)
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private repo: PrismaService,
+  ) {}
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<FindOneUserDto> {
@@ -40,13 +44,11 @@ export class UsersController {
 
   @Post()
   async create(@Body() data: CreateUserDto) {
-    const { name, email, password } = data;
-    return this.usersService.create({ name, email, password });
+    return await this.usersService.create(data);
   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: UpdateUserDto) {
-    const { name, email, password } = data;
     const user = await this.usersService.findOne({
       id: Number(id),
     });
@@ -57,7 +59,7 @@ export class UsersController {
 
     return this.usersService.update({
       where: { id: Number(id) },
-      data: { name, email, password },
+      data: data,
     });
   }
 

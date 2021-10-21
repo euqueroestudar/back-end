@@ -6,7 +6,7 @@ export class FindOneUserDto {
   id: number;
 
   @Expose()
-  name: string;
+  username: string;
 
   @IsEmail()
   @Expose()
