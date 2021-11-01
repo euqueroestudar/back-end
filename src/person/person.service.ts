@@ -1,11 +1,6 @@
 import { Prisma, Person } from '.prisma/client';
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreatePersonDto } from './dtos/create-person';
 
 @Injectable()
 export class PersonService {
