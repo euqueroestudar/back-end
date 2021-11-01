@@ -1,6 +1,18 @@
 import { Role } from '.prisma/client';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { Exclude } from 'class-transformer';
+import {
+  IsEmail,
+  IsEnum,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { Match } from './match.decorator';
+
+export enum typeAccount {
+  INSTITUTION = 'INSTITUTION',
+  PERSON = 'PERSON',
+}
 
 export class CreateUserDto {
   @MinLength(3)
@@ -15,8 +27,8 @@ export class CreateUserDto {
   @MaxLength(20)
   password: string;
 
-  @IsString()
-  role: Role;
+  @IsEnum(typeAccount)
+  role: typeAccount;
 
   @IsString()
   @MinLength(6)

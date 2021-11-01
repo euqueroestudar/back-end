@@ -15,6 +15,14 @@ export class UsersService {
   async findOne(id: Prisma.UsersWhereUniqueInput) {
     const user = await this.repo.users.findUnique({
       where: id,
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        password: false,
+        person: true,
+      },
     });
 
     if (!user) {
@@ -54,6 +62,29 @@ export class UsersService {
       cursor,
       where,
       orderBy,
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+        password: true,
+        person: true,
+        createdAt: true,
+        updatedAt: true,
+        Courses: false,
+        Branch: false,
+        andress: false,
+        Evaluation: true,
+        institution: true,
+      },
+    });
+  }
+
+  async findEmail(email: string) {
+    return this.repo.users.findUnique({
+      where: {
+        email: email,
+      },
     });
   }
 }

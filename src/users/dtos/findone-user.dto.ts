@@ -1,3 +1,4 @@
+import { Role } from '.prisma/client';
 import { Expose } from 'class-transformer';
 import { IsEmail } from 'class-validator';
 
@@ -11,4 +12,10 @@ export class FindOneUserDto {
   @IsEmail()
   @Expose()
   email: string;
+
+  @Expose()
+  person: any;
+
+  @Expose()
+  role: Role;
 }

@@ -25,6 +25,7 @@ export class UsersController {
     private repo: PrismaService,
   ) {}
 
+  @Serialize(FindOneUserDto)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<FindOneUserDto> {
     return this.usersService.findOne({ id: Number(id) });

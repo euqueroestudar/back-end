@@ -8,6 +8,9 @@ export class UserDto {
   @Expose()
   name: string;
 
+  @Expose()
+  username: string;
+
   @IsEmail()
   @Expose()
   email: string;
@@ -15,6 +18,9 @@ export class UserDto {
   @IsString()
   @Expose()
   role: string;
+
+  @Expose()
+  person: string;
 
   @Expose()
   createdAt: Date;
