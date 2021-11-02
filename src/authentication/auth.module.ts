@@ -10,13 +10,15 @@ import { UsersService } from '../users/users.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
-import { PersonModule } from 'src/person/person.module';
+import { PersonModule } from '../person/person.module';
+import { InstitutionModule } from '../institution/institution.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     UsersModule,
     PersonModule,
+    InstitutionModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
