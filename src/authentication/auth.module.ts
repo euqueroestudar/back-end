@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import { PersonModule } from '../person/person.module';
 import { InstitutionModule } from '../institution/institution.module';
+import { CoursesModule } from 'src/courses/courses.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { InstitutionModule } from '../institution/institution.module';
     PersonModule,
     InstitutionModule,
     PassportModule,
+    CoursesModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '7d' },
