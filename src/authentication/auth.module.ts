@@ -13,6 +13,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { PersonModule } from '../person/person.module';
 import { InstitutionModule } from '../institution/institution.module';
 import { CoursesModule } from 'src/courses/courses.module';
+import { AddressModule } from 'src/address/address.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CoursesModule } from 'src/courses/courses.module';
     InstitutionModule,
     PassportModule,
     CoursesModule,
+    AddressModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '7d' },
