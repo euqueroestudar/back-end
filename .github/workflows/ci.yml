@@ -27,6 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm i -g @nestjs/cli    
-    - run: nest install
+    - run: npm install
     - run: npm audit fix
     - run: npm test
