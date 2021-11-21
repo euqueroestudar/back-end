@@ -11,6 +11,6 @@ async function bootstrap() {
     }),
   );
   OpenAPI.instance(app);
-  await app.listen(4000);
+  await app.listen(3000);
 }
 bootstrap();
