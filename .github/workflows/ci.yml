@@ -28,4 +28,5 @@ jobs:
       - run: npm i -g @nestjs/cli
       - run: npm install
       - run: npm run build
-      - run: pm2 start dist/main.js - eqes
+      - run: pm2 delete 0
+      - run: pm2 restart dist/main.js - eqes
